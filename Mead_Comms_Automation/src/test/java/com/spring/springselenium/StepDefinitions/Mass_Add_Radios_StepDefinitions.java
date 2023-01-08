@@ -33,7 +33,6 @@ public class Mass_Add_Radios_StepDefinitions {
   @LazyAutowired
   Mass_Add_Radios_PageActions pageActions;
   static Set<String> radioAdd_expt_Values;
-
   @Autowired
   ScenarioContext scenarioContext;
 
@@ -73,7 +72,7 @@ public class Mass_Add_Radios_StepDefinitions {
   public void press_save_to_add_the_new_radios_to_the_inventory() throws Throwable {
     pageActions.save_functionality();
     contextMap.get(driver.hashCode()).getScenario().log("Pressed Save button on UI Page for creating radios ");
-    Thread.sleep(3000);
+    utils.waitByTime(3000);
   }
 
   @Then("UI page should navigated to {string} page by displaying newly created Radios")
@@ -116,19 +115,6 @@ public class Mass_Add_Radios_StepDefinitions {
     Assert.assertEquals(act, dataTable.transpose().asList(String.class));
     // Assert.assertTrue(act.equals(dataTable.asList()));
 
-  }
-
-  @And("Press Cancel button on the UI page")
-  public void press_cancel_btn() throws Throwable {
-    pageActions.pressCancelBtn();
-    contextMap.get(driver.hashCode()).getScenario().log("pressed cancel button");
-  }
-
-  @Then("User should Navigated to Radio Search page with Title {string}")
-  public void ui_page_navigated_to_created_radios(String expt_title) throws Throwable {
-    String act_title = pageActions.navigate_RadioSearch();
-    Assert.assertEquals(expt_title, act_title);
-    contextMap.get(driver.hashCode()).getScenario().log("UI page navigated to " + act_title + "page");
   }
 
   /* Mass Add Radios UI page Vehicle field validation */
@@ -189,7 +175,6 @@ public class Mass_Add_Radios_StepDefinitions {
 
 
   /* Mass Add Radios with Mandatory Fields */
-
 
   @Then("I Enter the Data in {string},{string},{string} and {string} in mandatory Fields")
   public void I_enter_data_in_MandatoryFields(String radiotype, String numberofradios, String racfid, String vehicleno) throws Throwable {

@@ -187,7 +187,7 @@ public class Radio_Search_PageStepDefinitions {
       contextMap.get(driver.hashCode()).getScenario().log("Radio Shop Field Assertion passed");
 
       Set<String> PO_dataes = pageActions.validate_results(colnames.get(4));
-      Thread.sleep(1000);
+      utils.waitByTime(1000);
       for (String act_date : PO_dataes) {
         boolean compareDates = pageActions.compareDates(ship_from_date, ship_to_date, act_date);
         contextMap.get(driver.hashCode()).getScenario().log("Search Results displayed PO Dates as:" + act_date);
@@ -415,7 +415,7 @@ public class Radio_Search_PageStepDefinitions {
       contextMap.get(driver.hashCode()).getScenario().log("Search Results displayed as:" + act_result);
       Assert.assertTrue(act_result.containsAll(Arrays.asList(status, radio_type, Inventory_status)));
       contextMap.get(driver.hashCode()).getScenario().log("Results are vlidated");
-      Thread.sleep(2000);
+      utils.waitByTime(2000);
       LOGGER.info("Searh results are validated ");
 
     } else {
@@ -477,7 +477,7 @@ public class Radio_Search_PageStepDefinitions {
       Set<String> act_result = pageActions.validate_exported_results(colnames);
       contextMap.get(driver.hashCode()).getScenario().log("Search Results displayed as:" + act_result);
       Assert.assertTrue(act_result.containsAll(Arrays.asList(status, power, assign_dept, radio_shop)));
-      Thread.sleep(2000);
+      utils.waitByTime(2000);
       LOGGER.info("Searh results are validated ");
 
     } else {
@@ -586,25 +586,25 @@ public class Radio_Search_PageStepDefinitions {
       pageActions.add_colums_to_result_table(colnames);
       Set<String> status_val = pageActions.validate_results(colnames.get(0));
       contextMap.get(driver.hashCode()).getScenario().log("Search Results displayed status type as:" + status_val);
-      Thread.sleep(1000);
+      utils.waitByTime(1000);
       Assertions.assertEquals(status_val, new HashSet<>(Arrays.asList(status)));
       contextMap.get(driver.hashCode()).getScenario().log("Status Field Assertion passed");
 
       Set<String> radio_val = pageActions.validate_results(colnames.get(1));
       contextMap.get(driver.hashCode()).getScenario().log("Search Results displayed radio type as:" + radio_val);
-      Thread.sleep(1000);
+      utils.waitByTime(1000);
       Assertions.assertEquals(radio_val, new HashSet<>(Arrays.asList(radio_type)));
       contextMap.get(driver.hashCode()).getScenario().log("Radio type Field Assertion passed");
 
       Set<String> inventory_val = pageActions.validate_results(colnames.get(2));
-      Thread.sleep(1000);
+      utils.waitByTime(1000);
       contextMap.get(driver.hashCode()).getScenario().log("Search Results displayed Inventory value as:" + inventory_val);
       Assertions.assertEquals(inventory_val, new HashSet<>(Arrays.asList(Inventory_status)));
       contextMap.get(driver.hashCode()).getScenario().log("Inventory status Field Assertion passed");
 
       Set<String> PO_dataes = pageActions.validate_results(colnames.get(3));
       contextMap.get(driver.hashCode()).getScenario().log("Search Results displayed PO Dates as:" + PO_dataes);
-      Thread.sleep(1000);
+      utils.waitByTime(1000);
       for (String act_date : PO_dataes) {
         boolean compareDates = pageActions.compareDates(po_from_date, po_to_date, act_date);
         Assert.assertTrue(compareDates);
@@ -669,7 +669,7 @@ public class Radio_Search_PageStepDefinitions {
     pageActions.clickon_search();
     boolean nosearch_results = pageActions.Search_results_displayed();
     if (!nosearch_results) {
-      Thread.sleep(2000);
+      utils.waitByTime(2000);
       pageActions.add_colums_to_result_table(dataTable.transpose().asList(String.class));
       LOGGER.info("Searh results are Displayed ");
     } else {
@@ -705,7 +705,7 @@ public class Radio_Search_PageStepDefinitions {
   public void search_results_should_be_cleared_and_display_somethingin_results_table(String norecords) throws Throwable {
     boolean nosearch_results = pageActions.Search_results_displayed();
     if (!nosearch_results) {
-      Thread.sleep(2000);
+      utils.waitByTime(2000);
       LOGGER.info("Searh results are Displayed ");
     } else {
 
@@ -730,7 +730,7 @@ public class Radio_Search_PageStepDefinitions {
     boolean nosearch_results = pageActions.Search_results_displayed();
     if (!nosearch_results) {
       pageActions.add_colums_to_result_table(col_names);
-      Thread.sleep(2000);
+      utils.waitByTime(2000);
       Set<String> staus_col_results = pageActions.validate_results(dataTable.transpose().asList(String.class).get(0));
       contextMap.get(driver.hashCode()).getScenario().log("Search Results displayed status type as:" + staus_col_results);
       Assertions.assertEquals(staus_col_results, new HashSet<>(Arrays.asList(status)));
@@ -745,7 +745,7 @@ public class Radio_Search_PageStepDefinitions {
       contextMap.get(driver.hashCode()).getScenario().log("Search Results displayed Inventory Status as:" + inv_col_results);
       Assertions.assertEquals(inv_col_results, new HashSet<>(Arrays.asList(comman_invstatus)));
       contextMap.get(driver.hashCode()).getScenario().log("Inventory Status Field Assertion passed");
-      Thread.sleep(2000);
+      utils.waitByTime(2000);
       LOGGER.info("Searh results are validated ");
     } else {
       contextMap.get(driver.hashCode()).getScenario().log("No search Records are found for Selected Criteria");

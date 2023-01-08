@@ -71,21 +71,21 @@ public class Mead_Turnout_Home_PageActions {
     utils.setValueToElement(driver, pageObjects.username, username);
     wait.until(ExpectedConditions.visibilityOf(pageObjects.next));
     utils.clickElementByWebElement(driver, pageObjects.next);
-    Thread.sleep(1000);
+    utils.waitByTime(1000);
     try {
       WebElement error = driver.findElement(By.xpath("//div[contains(@class,'o-form-error-container')]"));
       if (error.isDisplayed()) {
-        Thread.sleep(2000);
+        utils.waitByTime(2000);
         utils.clickElementByWebElement(driver, pageObjects.next);
       }
     } catch (Exception e) {
       System.out.println("no error displayed at login screen");
     }
     try {
-      Thread.sleep(2000);
+      utils.waitByTime(2000);
       WebElement password_conformation = driver.findElement(By.xpath("//div[@data-se='okta_password']"));
       if (password_conformation.isDisplayed()) {
-        Thread.sleep(2000);
+        utils.waitByTime(2000);
         utils.clickElementByWebElement(driver, password_conformation);
       }
 
@@ -108,14 +108,12 @@ public class Mead_Turnout_Home_PageActions {
 
   public void navigate_MOWPage() throws InterruptedException {
     utils.clickElementByWebElement(driver, pageObjects.mow_btn_click);
-    Thread.sleep(1000);
+    utils.waitByTime(1000);
   }
 
-  public String Turnout_Asset_PageTitle_Validation() throws InterruptedException {
-    if (pageObjects.loader.isDisplayed()) {
-      wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
-    }
-    Thread.sleep(5000);
+  public String Turnout_Asset_PageTitle_Validation() {
+    utils.waitTillLoadingCompletes(pageObjects.loader);
+    utils.waitByTime(5000);
     addScreenShot();
     utils.mouseOverElement(pageObjects.asset_btn_link);
     wait.until(ExpectedConditions.visibilityOf(pageObjects.turnout_btn_click));

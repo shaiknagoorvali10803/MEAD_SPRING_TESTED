@@ -116,8 +116,6 @@ public class Turnout_Search_PageActions {
     Utils.changefocus();
   }
 
-
-
   /* Selecting the value from TrackName dropdown */
 
   public void select_trackNamexDropdown_val(String trackName1, String trackName2) {
@@ -251,24 +249,18 @@ public class Turnout_Search_PageActions {
 
   public void add_colums_to_result_table(List<String> colnames) throws InterruptedException {
     Utils.clickElementByWebElement(driver, pageObjects.Customized_column);
-    Thread.sleep(1000);
+    Utils.waitByTime(1000);
     driver.findElement(By.xpath("//span[normalize-space()='Remove All']")).click();
-    Thread.sleep(1000);
-    wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
+    Utils.waitByTime(1000);
+    Utils.waitTillLoadingCompletes(pageObjects.loader);
     final String available_col = "//ul[@aria-label='Available']//li";
     Iterator<String> iterator = colnames.iterator();
     while (iterator.hasNext()) {
       Utils.doubleclick_element(driver, available_col, iterator.next());
     }
     Utils.clickElementByWebElement(driver, pageObjects.apply_changes);
-    try {
-      Thread.sleep(1000);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
-    if (pageObjects.loader.isDisplayed()) {
-      wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
-    }
+    Utils.waitByTime(1000);
+    Utils.waitTillLoadingCompletes(pageObjects.loader);
     addScreenShot();
   }
 
@@ -276,23 +268,11 @@ public class Turnout_Search_PageActions {
   /* Performing Search Functionlaity */
 
   public void clickon_search() {
-    try {
-      Thread.sleep(500);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
-    if (pageObjects.loader.isDisplayed()) {
-      wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
-    }
+    Utils.waitByTime(500);
+    Utils.waitTillLoadingCompletes(pageObjects.loader);
     Utils.clickElementByWebElement(driver, pageObjects.search_button);
-    try {
-      Thread.sleep(500);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
-    if (pageObjects.loader.isDisplayed()) {
-      wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
-    }
+    Utils.waitByTime(500);
+    Utils.waitTillLoadingCompletes(pageObjects.loader);
   }
 
 
@@ -308,17 +288,13 @@ public class Turnout_Search_PageActions {
   public Set<String> fetch_data_from_resultstable(String colName) throws InterruptedException {
     Utils.clickElementByWebElement(driver, driver
         .findElement(By.xpath("//thead[@id='turnoutResultForm:turnoutDataTable_head']//descendant::span[normalize-space()='" + colName + "']")));
-    Thread.sleep(1000);
-    if (pageObjects.loader.isDisplayed()) {
-      wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
-    }
+    Utils.waitByTime(1000);
+    Utils.waitTillLoadingCompletes(pageObjects.loader);
     Set<String> dept_values = table_column_values(driver, pageObjects.result_table_hdr, colName);
     Utils.clickElementByWebElement(driver, driver
         .findElement(By.xpath("//thead[@id='turnoutResultForm:turnoutDataTable_head']//descendant::span[normalize-space()='" + colName + "']")));
-    Thread.sleep(500);
-    if (pageObjects.loader.isDisplayed()) {
-      wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
-    }
+    Utils.waitByTime(500);
+    Utils.waitTillLoadingCompletes(pageObjects.loader);
     dept_values.addAll(table_column_values(driver, pageObjects.result_table_hdr, colName));
     return dept_values;
   }
@@ -339,17 +315,17 @@ public class Turnout_Search_PageActions {
         String pagination_text = pageObjects.page_no_text.getText();
         String page[] = pagination_text.split(" ");
         for (int i = 1; i <= Integer.parseInt(page[page.length - 1]); i++) {
-          Thread.sleep(2000);
+          Utils.waitByTime(2000);
           String xpath = "//a[normalize-space()='" + i + "']";
-          Thread.sleep(1000);
-          wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
+          Utils.waitByTime(1000);
+          Utils.waitTillLoadingCompletes(pageObjects.loader);
           wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
           Utils.clickElementByXPath(driver, xpath);
-          Thread.sleep(1000);
+          Utils.waitByTime(1000);
           // System.err.println("pag number is :" + i);
           try {
             result.addAll(table_column_values(driver, pageObjects.result_table_hdr, colName));
-            Thread.sleep(1000);
+            Utils.waitByTime(1000);
           } catch (StaleElementReferenceException e) {
             result.addAll(table_column_values(driver, pageObjects.result_table_hdr, colName));
           }
@@ -358,7 +334,7 @@ public class Turnout_Search_PageActions {
       } else {
         try {
           result.addAll(table_column_values(driver, pageObjects.result_table_hdr, colName));
-          Thread.sleep(1000);
+          Utils.waitByTime(1000);
         } catch (StaleElementReferenceException e) {
           result.addAll(table_column_values(driver, pageObjects.result_table_hdr, colName));
         }
@@ -366,7 +342,7 @@ public class Turnout_Search_PageActions {
     }
     try {
       result.addAll(table_column_values(driver, pageObjects.result_table_hdr, colName));
-      Thread.sleep(1000);
+      Utils.waitByTime(1000);
     } catch (StaleElementReferenceException e) {
       result.addAll(table_column_values(driver, pageObjects.result_table_hdr, colName));
     }
@@ -390,11 +366,11 @@ public class Turnout_Search_PageActions {
         String page[] = pagination_text.split(" ");
         for (int i = 1; i <= Integer.parseInt(page[page.length - 1]); i++) {
           String xpath = "//a[normalize-space()='" + i + "']";
-          Thread.sleep(1000);
-          wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
+          Utils.waitByTime(1000);
+          Utils.waitTillLoadingCompletes(pageObjects.loader);
           wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
           Utils.clickElementByXPath(driver, xpath);
-          Thread.sleep(1000);
+          Utils.waitByTime(1000);
           fetch_result_griddata(colnames, colvalues);
         }
       } else {
@@ -424,14 +400,14 @@ public class Turnout_Search_PageActions {
       if (colName.equals("Prefix")) {
         try {
           prefix.addAll(table_column_values(driver, pageObjects.result_table_hdr, colName));
-          Thread.sleep(1000);
+          Utils.waitByTime(1000);
         } catch (StaleElementReferenceException e) {
           prefix.addAll(table_column_values(driver, pageObjects.result_table_hdr, colName));
         }
       } else if (colName.equals("Track Name")) {
         try {
           track_name.addAll(table_column_values(driver, pageObjects.result_table_hdr, colName));
-          Thread.sleep(1000);
+          Utils.waitByTime(1000);
         } catch (StaleElementReferenceException e) {
           track_name.addAll(table_column_values(driver, pageObjects.result_table_hdr, colName));
         }
@@ -439,7 +415,7 @@ public class Turnout_Search_PageActions {
       } else if (colName.equals("Track State")) {
         try {
           track_state.addAll(table_column_values(driver, pageObjects.result_table_hdr, colName));
-          Thread.sleep(1000);
+          Utils.waitByTime(1000);
         } catch (StaleElementReferenceException e) {
           track_state.addAll(table_column_values(driver, pageObjects.result_table_hdr, colName));
         }
@@ -447,14 +423,14 @@ public class Turnout_Search_PageActions {
       } else if (colName.equals("Track Type")) {
         try {
           track_type.addAll(table_column_values(driver, pageObjects.result_table_hdr, colName));
-          Thread.sleep(1000);
+          Utils.waitByTime(1000);
         } catch (StaleElementReferenceException e) {
           track_type.addAll(table_column_values(driver, pageObjects.result_table_hdr, colName));
         }
       } else if (colName.equals("Track Status")) {
         try {
           track_status.addAll(table_column_values(driver, pageObjects.result_table_hdr, colName));
-          Thread.sleep(1000);
+          Utils.waitByTime(1000);
         } catch (StaleElementReferenceException e) {
           track_status.addAll(table_column_values(driver, pageObjects.result_table_hdr, colName));
         }
@@ -504,14 +480,14 @@ public class Turnout_Search_PageActions {
   /* Click clear filter button */
   public void click_clearFilter() {
     Utils.clickElementByWebElement(driver, pageObjects.clearfilter_btn);
-    wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
+    Utils.waitTillLoadingCompletes(pageObjects.loader);
     Utils.changefocus();
   }
 
   /* Perform save Operation by entering report name */
 
   public void saveReport(String reportName) throws InterruptedException {
-    Thread.sleep(1000);
+    Utils.waitByTime(1000);
     Utils.clickElementByWebElement(driver, pageObjects.action_btn);
     Utils.clickElementByWebElement(driver, pageObjects.save_report_btn);
     Utils.setValueToElement(driver, pageObjects.report_name, reportName);
@@ -556,11 +532,11 @@ public class Turnout_Search_PageActions {
 
   public void select_report_from_saved_list(String reportname) {
     Utils.clickElementByWebElement(driver, pageObjects.saved_reports_drp_dwn);
-    wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
+    Utils.waitTillLoadingCompletes(pageObjects.loader);
     final String report_name_xpath =
         "//li[@class='ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all' and @data-label='" + reportname + "']";
     driver.findElement(By.xpath(report_name_xpath)).click();
-    wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
+    Utils.waitTillLoadingCompletes(pageObjects.loader);
   }
 
 
@@ -609,11 +585,7 @@ public class Turnout_Search_PageActions {
   public void press_exportButton() {
     LOGGER.info(System.getProperty("user.dir"));
     Utils.deleteExistingFile("Turnouts");
-    try {
-      Thread.sleep(2000);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
+    Utils.waitByTime(3000);
     LOGGER.info("Existing File is deleted in the root directory");
     Utils.clickElementByWebElement(driver, pageObjects.export_btn);
   }
@@ -625,11 +597,7 @@ public class Turnout_Search_PageActions {
     if (fileDownloaded) {
       LOGGER.info("Exported file downloaded");
     }
-    try {
-      Thread.sleep(200);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
+    Utils.waitByTime(2000);
     String reportname = Utils.getFilename("Turnout");
     LOGGER.info("report name is :" + reportname);
     LOGGER.info("Exported file downloaded with name" + reportname);
@@ -659,9 +627,7 @@ public class Turnout_Search_PageActions {
   /* Checking the Functionality of Pagination links */
 
   public void pagination_links_navigation() throws InterruptedException {
-    if (pageObjects.loader.isDisplayed()) {
-      wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
-    }
+    Utils.waitTillLoadingCompletes(pageObjects.loader);
     String first_pageText = "";
     String page_Text = Utils.getValueByElement(driver, pageObjects.page_no_text);
     String[] split = page_Text.split(" ");
@@ -670,37 +636,27 @@ public class Turnout_Search_PageActions {
       /* last page check */
       Utils.clickElementByWebElement(driver, pageObjects.last_page_link);
       LOGGER.info("Last Page link functionality Validated");
-      if (pageObjects.loader.isDisplayed()) {
-        wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
-      }
+      Utils.waitTillLoadingCompletes(pageObjects.loader);
       String last_page_Text = Utils.getValueByElement(driver, pageObjects.page_no_text);
-      if (pageObjects.loader.isDisplayed()) {
-        wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
-      }
+      Utils.waitTillLoadingCompletes(pageObjects.loader);
       Assert.assertEquals(current_pageno(last_page_Text), retrive_pageno(last_page_Text));
 
       /* First page check */
       Utils.clickElementByWebElement(driver, pageObjects.first_page_link);
       LOGGER.info("First Page link functionality Validated");
-      if (pageObjects.loader.isDisplayed()) {
-        wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
-      }
+      Utils.waitTillLoadingCompletes(pageObjects.loader);
       first_pageText = Utils.getValueByElement(driver, pageObjects.page_no_text);
       Assert.assertEquals(current_pageno(first_pageText), 1);
 
       /* pagination check */
       String total_records = Utils.getValueByElement(driver, pageObjects.total_records);
       if (Integer.parseInt(total_records.split(" ")[2]) >= 25) {
-        if (pageObjects.loader.isDisplayed()) {
-          wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
-        }
+        Utils.waitTillLoadingCompletes(pageObjects.loader);
         first_pageText = Utils.getValueByElement(driver, pageObjects.page_no_text);
       }
       for (int i = 1; i <= retrive_pageno(first_pageText); i++) {
         Utils.clickElementByWebElement(driver,By.xpath("//a[normalize-space()='" + i + "']"));
-        if (pageObjects.loader.isDisplayed()) {
-          wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
-        }
+        Utils.waitTillLoadingCompletes(pageObjects.loader);
         String pag_pageText = Utils.getValueByElement(driver, pageObjects.page_no_text);
         LOGGER.info("current page no is: " + i + " and expected page number is " + current_pageno(pag_pageText));
         Assert.assertEquals(current_pageno(pag_pageText), i);
@@ -717,10 +673,10 @@ public class Turnout_Search_PageActions {
     boolean nosearch_results = Search_results_displayed();
     if (!nosearch_results) {
       Utils.clickElementByWebElement(driver, pageObjects.first_page_link);
-      wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
+      Utils.waitTillLoadingCompletes(pageObjects.loader);
       for (String records : noofrecords) {
         select_Records(driver, pageObjects.noof_records_drpdwn, records);
-        wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
+        Utils.waitTillLoadingCompletes(pageObjects.loader);
         List<String> dept_names = table_column_value(driver, pageObjects.result_table_hdr, "Prefix");
         LOGGER.info("Expected records per page are: " + records + " and actual records per page are :" + dept_names.size());
         if ((Integer.parseInt(records) < dept_names.size())) {
@@ -740,7 +696,7 @@ public class Turnout_Search_PageActions {
   public void select_Records(WebDriver driver, WebElement element, String noofrecords) throws InterruptedException {
     Select select = new Select(element);
     select.selectByValue(noofrecords);
-    wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
+    Utils.waitTillLoadingCompletes(pageObjects.loader);
   }
 
   public int retrive_pageno(String pageString) {
@@ -796,10 +752,8 @@ public class Turnout_Search_PageActions {
     for (String racfid : RACF) {
       Utils.setValueToElement(driver, pageObjects.RACF_search_text, racfid);
       Utils.clickElementByWebElement(driver, pageObjects.RACF_search_btn);
-      Thread.sleep(1000);
-      if (pageObjects.loader.isDisplayed()) {
-        wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
-      }
+      Utils.waitByTime(1000);
+      Utils.waitTillLoadingCompletes(pageObjects.loader);
       String records = null;
       try {
         if (pageObjects.user_found.isDisplayed()) {
@@ -812,7 +766,7 @@ public class Turnout_Search_PageActions {
       }
 
       if (records.equals("1 user(s) found")) {
-        Thread.sleep(1000);
+        Utils.waitByTime(1000);
         Utils.clickElementByWebElement(driver, pageObjects.RACF_search_res_sel);
       } else {
         LOGGER.info("enter valid RACFID");
@@ -828,9 +782,7 @@ public class Turnout_Search_PageActions {
 
   public void share_Report_tome(String comment) {
     Utils.clickElementByWebElement(driver, pageObjects.To_me);
-    if (pageObjects.loader.isDisplayed()) {
-      wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
-    }
+    Utils.waitTillLoadingCompletes(pageObjects.loader);
     Utils.setValueToElement(driver, pageObjects.email_comment, comment);
     Utils.clickElementByWebElement(driver, pageObjects.email_send_btn);
 
@@ -839,10 +791,8 @@ public class Turnout_Search_PageActions {
   /* Validating the Email sent Message */
 
   public String validate_emilaSent_message() throws InterruptedException {
-    Thread.sleep(500);
-    if (pageObjects.loader.isDisplayed()) {
-      wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
-    }
+    Utils.waitByTime(500);
+    Utils.waitTillLoadingCompletes(pageObjects.loader);
     String success_messString = Utils.getValueByElement(driver, pageObjects.email_sent_text);
     LOGGER.info(success_messString + "displayed on the UI Page");
     return success_messString;
@@ -889,7 +839,7 @@ public class Turnout_Search_PageActions {
 
   public boolean searchResults_table(WebDriver driver, List<WebElement> nosuchrecords1) {
     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(DRIVER_WAIT_TIME_IN_SECS));
-    wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
+    Utils.waitTillLoadingCompletes(pageObjects.loader);
     boolean flag = false;
     if (nosuchrecords1.size() <= 1) {
       flag = true;

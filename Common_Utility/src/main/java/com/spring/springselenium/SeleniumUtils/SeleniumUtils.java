@@ -1857,7 +1857,7 @@ public class SeleniumUtils {
     try {
       long start = System.currentTimeMillis();
       int elapsedTime = 0;
-      waitByTime(250);
+      waitByTime(500);
       while (element.isDisplayed()) {
         LOGGER.info("Waiting for Loading Screens to go away");
         if (elapsedTime > maxSyncTime) {

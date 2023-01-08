@@ -607,7 +607,7 @@ public class Turnout_Search_PageStepDefinitions {
   public void search_results_should_be_cleared_and_display_somethingin_results_table(String norecords) throws Throwable {
     boolean nosearch_results = pageActions.Search_results_displayed();
     if (!nosearch_results) {
-      Thread.sleep(2000);
+      util.waitByTime(2000);
       LOGGER.info("Searh results are Displayed ");
     } else {
       Assert.assertEquals(pageActions.noRecordsFound(), norecords);
@@ -703,7 +703,7 @@ public class Turnout_Search_PageStepDefinitions {
       Set<String> act_result = pageActions.validate_exported_results(colnames);
       LOGGER.info("Search Results displayed as:" + act_result);
       Assert.assertTrue(act_result.containsAll(Arrays.asList(trackState_1, trackType_1, trackStatus_1)));
-      Thread.sleep(2000);
+      util.waitByTime(2000);
       LOGGER.info("Searh results are validated ");
 
     } else {

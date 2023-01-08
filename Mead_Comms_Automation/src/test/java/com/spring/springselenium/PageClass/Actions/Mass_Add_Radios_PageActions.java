@@ -130,13 +130,13 @@ public class Mass_Add_Radios_PageActions {
   }
 
   public void save_functionality() throws InterruptedException {
-    Thread.sleep(1500);
+    utils.waitByTime(1500);
     utils.clickElementByWebElement(driver, pageObjects.save_btn);
   }
 
   public String inlineEdit_page_Validation() throws InterruptedException {
     String act_title = null;
-    Thread.sleep(2000);
+    utils.waitByTime(2000);
     try {
       act_title = utils.getValueByElement(driver, pageObjects.radio_inlineEdit);
     } catch (Exception e) {
@@ -235,7 +235,7 @@ public class Mass_Add_Radios_PageActions {
 
   public String verify_RACFpopup(String racfid) throws InterruptedException {
     String act_title = utils.getValueByElement(driver, pageObjects.RACF_pop_title);
-    Thread.sleep(1500);
+    utils.waitByTime(1500);
     utils.setValueToElement(driver, pageObjects.RACF_window_search, racfid);
     try {
       wait.until(ExpectedConditions.visibilityOf(pageObjects.RACF_search_autocomplete));
@@ -249,7 +249,7 @@ public class Mass_Add_Radios_PageActions {
       utils.clickElementByWebElement(driver, pageObjects.RACF_search_autocomplete);
     }
 
-    Thread.sleep(1000);
+    utils.waitByTime(1000);
     utils.clickElementByWebElement(driver, pageObjects.RACF_window_search_okbtn);
     return act_title;
   }
@@ -395,7 +395,7 @@ public class Mass_Add_Radios_PageActions {
 
   public String check_error_msg() throws InterruptedException {
     utils.clickElementByWebElement(driver, pageObjects.save_btn);
-    Thread.sleep(2000);
+    utils.waitByTime(2000);
     boolean no_radio_sel = pageObjects.no_radio_txt.getAttribute("value").equals("");
     boolean no_status_sel = pageObjects.status_label.getText().equals("Select One");
     boolean no_radiotype_sel = pageObjects.radiotype_label.getText().equals("Select One");

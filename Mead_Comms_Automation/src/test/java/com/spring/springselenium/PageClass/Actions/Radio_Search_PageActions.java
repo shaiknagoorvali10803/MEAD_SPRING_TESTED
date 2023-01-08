@@ -111,11 +111,9 @@ public class Radio_Search_PageActions {
   }
 
   public void clickon_search() {
-    if (pageObjects.loader.isDisplayed()) {
-      wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
-    }
+    utils.waitTillLoadingCompletes(pageObjects.loader);
     utils.clickElementByWebElement(driver, pageObjects.search_button);
-    wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
+    utils.waitTillLoadingCompletes(pageObjects.loader);
 
   }
 
@@ -195,14 +193,14 @@ public class Radio_Search_PageActions {
   public Set<String> fetch_data_from_resultstable(String colName) {
     utils.clickElementByWebElement(driver, driver
         .findElement(By.xpath("//thead[@id='radioResultForm:radioDataTable_head']//descendant::span[normalize-space()='" + colName + "']")));
-    wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
+    utils.waitTillLoadingCompletes(pageObjects.loader);
     Set<String> dept_values = table_column_values(driver, pageObjects.result_table_hdr, colName);
-    wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
+    utils.waitTillLoadingCompletes(pageObjects.loader);
     utils.clickElementByWebElement(driver, driver
         .findElement(By.xpath("//thead[@id='radioResultForm:radioDataTable_head']//descendant::span[normalize-space()='" + colName + "']")));
-    wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
+    utils.waitTillLoadingCompletes(pageObjects.loader);
     dept_values.addAll(table_column_values(driver, pageObjects.result_table_hdr, colName));
-    wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
+    utils.waitTillLoadingCompletes(pageObjects.loader);
     return dept_values;
   }
 
@@ -224,7 +222,7 @@ public class Radio_Search_PageActions {
     final String available_col = "//ul[@aria-label='Available']//li";
     utils.doubleclick_element(driver, available_col, colName);
     utils.clickElementByWebElement(driver, pageObjects.apply_chnages);
-    wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
+    utils.waitTillLoadingCompletes(pageObjects.loader);
     Set<String> racf_values = table_column_values(driver, pageObjects.result_table_hdr, colName);
     return racf_values;
   }
@@ -253,12 +251,12 @@ public class Radio_Search_PageActions {
 
   public void click_clearFilter() {
     utils.clickElementByWebElement(driver, pageObjects.clearfilter_btn);
-    wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
+    utils.waitTillLoadingCompletes(pageObjects.loader);
     utils.changefocus();;
   }
 
   public void saveReport(String reportName) throws InterruptedException {
-    Thread.sleep(1000);
+    utils.waitByTime(1000);
     utils.clickElementByWebElement(driver, pageObjects.action_btn);
     utils.clickElementByWebElement(driver, pageObjects.save_report_btn);
     utils.setValueToElement(driver, pageObjects.report_name, reportName);
@@ -374,14 +372,14 @@ public class Radio_Search_PageActions {
   public Set<String> validate_exported_results(List<String> colnames) throws InterruptedException {
     contextMap.get(driver.hashCode()).getScenario().log(System.getProperty("user.dir"));
     utils.deleteExistingFile("Radio Details");
-    Thread.sleep(5000);
+    utils.waitByTime(5000);
     contextMap.get(driver.hashCode()).getScenario().log("Existing File is deleted in the root directory");
     utils.clickElementByWebElement(driver, pageObjects.export_btn);
     boolean fileDownloaded = utils.isFileDownloaded("Radio Details");
     if (fileDownloaded) {
       contextMap.get(driver.hashCode()).getScenario().log("Exported file downloaded");
     }
-    Thread.sleep(5000);
+    utils.waitByTime(5000);
     String reportname = utils.getFilename("Radio");
     contextMap.get(driver.hashCode()).getScenario().log("report name is :" + reportname);
     contextMap.get(driver.hashCode()).getScenario().log("Exported file downloaded with name" + reportname);
@@ -438,7 +436,7 @@ public class Radio_Search_PageActions {
   }
 
   public void pagination_links_navigation() throws InterruptedException {
-    wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
+    utils.waitTillLoadingCompletes(pageObjects.loader);
     String first_pageText = "";
     String page_Text = utils.getValueByElement(driver, pageObjects.page_no_text);
     String[] split = page_Text.split(" ");
@@ -447,15 +445,15 @@ public class Radio_Search_PageActions {
       /* last page check */
       utils.clickElementByWebElement(driver, pageObjects.last_page_link);
       contextMap.get(driver.hashCode()).getScenario().log("Last Page link functionality Validated");
-      wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
+      utils.waitTillLoadingCompletes(pageObjects.loader);
       String last_page_Text = utils.getValueByElement(driver, pageObjects.page_no_text);
-      wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
+      utils.waitTillLoadingCompletes(pageObjects.loader);
       Assert.assertEquals(current_pageno(last_page_Text), retrive_pageno(last_page_Text));
 
       /* First page check */
       utils.clickElementByWebElement(driver, pageObjects.first_page_link);
       contextMap.get(driver.hashCode()).getScenario().log("First Page link functionality Validated");
-      wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
+      utils.waitTillLoadingCompletes(pageObjects.loader);
       first_pageText = utils.getValueByElement(driver, pageObjects.page_no_text);
       Assert.assertEquals(current_pageno(first_pageText), 1);
 
@@ -463,12 +461,12 @@ public class Radio_Search_PageActions {
       String total_records = utils.getValueByElement(driver, pageObjects.total_records);
       if (Integer.parseInt(total_records.split(" ")[2]) >= 500) {
         select_Records(driver, pageObjects.noof_records_drpdwn, "300");
-        wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
+        utils.waitTillLoadingCompletes(pageObjects.loader);
         first_pageText = utils.getValueByElement(driver, pageObjects.page_no_text);
       }
       for (int i = 1; i <= retrive_pageno(first_pageText); i++) {
         driver.findElement(By.xpath("//a[normalize-space()='" + i + "']")).click();
-        wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
+        utils.waitTillLoadingCompletes(pageObjects.loader);
         String pag_pageText = utils.getValueByElement(driver, pageObjects.page_no_text);
         contextMap.get(driver.hashCode()).getScenario().log("\"current page no is: " + i + " and expected page number is " + current_pageno(pag_pageText));
         Assert.assertEquals(current_pageno(pag_pageText), i);
@@ -506,7 +504,7 @@ public class Radio_Search_PageActions {
   public void select_Records(WebDriver driver, WebElement element, String noofrecords) throws InterruptedException {
     Select select = new Select(element);
     select.selectByValue(noofrecords);
-    wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
+    utils.waitTillLoadingCompletes(pageObjects.loader);
   }
 
   public int retrive_pageno(String pageString) {
@@ -553,7 +551,7 @@ public class Radio_Search_PageActions {
 
   public void select_report_from_saved_list(String reportname) {
     utils.clickElementByWebElement(driver, pageObjects.saved_reports_drp_dwn);
-    wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
+    utils.waitTillLoadingCompletes(pageObjects.loader);
     final String report_name_xpath =
         "//li[@class='ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all' and @data-label='" + reportname + "']";
     driver.findElement(By.xpath(report_name_xpath)).click();
@@ -579,10 +577,8 @@ public class Radio_Search_PageActions {
     for (String racfid : RACF) {
       utils.setValueToElement(driver, pageObjects.RACF_search_text, racfid);
       utils.clickElementByWebElement(driver, pageObjects.RACF_search_btn);
-      Thread.sleep(1000);
-      if (pageObjects.loader.isDisplayed()) {
-        wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
-      }
+      utils.waitByTime(1000);
+      utils.waitTillLoadingCompletes(pageObjects.loader);
       String records = null;
       try {
         if (pageObjects.user_found.isDisplayed()) {
@@ -595,7 +591,7 @@ public class Radio_Search_PageActions {
       }
 
       if (records.equals("1 user(s) found")) {
-        Thread.sleep(1000);
+        utils.waitByTime(1000);
         utils.clickElementByWebElement(driver, pageObjects.RACF_search_res_sel);
       } else {
         contextMap.get(driver.hashCode()).getScenario().log("enter valid RACFID");
@@ -609,19 +605,15 @@ public class Radio_Search_PageActions {
 
   public void share_Report_tome(String comment) {
     utils.clickElementByWebElement(driver, pageObjects.To_me);
-    if (pageObjects.loader.isDisplayed()) {
-      wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
-    }
+    utils.waitTillLoadingCompletes(pageObjects.loader);
     utils.setValueToElement(driver, pageObjects.email_comment, comment);
     utils.clickElementByWebElement(driver, pageObjects.email_send_btn);
 
   }
 
   public String validate_emilaSent_message() throws InterruptedException {
-    Thread.sleep(500);
-    if (pageObjects.loader.isDisplayed()) {
-      wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
-    }
+    utils.waitByTime(500);
+    utils.waitTillLoadingCompletes(pageObjects.loader);
     String success_messString = utils.getValueByElement(driver, pageObjects.email_sent_text);
     contextMap.get(driver.hashCode()).getScenario().log(success_messString + "displayed on the UI Page");
     return success_messString;
@@ -657,7 +649,7 @@ public class Radio_Search_PageActions {
    */
 
   public boolean searchResults_table(WebDriver driver, List<WebElement> nosuchrecords1) {
-    wait.until(ExpectedConditions.invisibilityOf(pageObjects.loader));
+    utils.waitTillLoadingCompletes(pageObjects.loader);
     boolean flag = false;
     if (nosuchrecords1.size() <= 1) {
       flag = true;

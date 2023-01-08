@@ -67,21 +67,21 @@ public class Mead_Comms_Home_PageActions {
     utils.setValueToElement(driver, pageObjects.username, username);
     wait.until(ExpectedConditions.visibilityOf(pageObjects.next));
     utils.clickElementbyWebElement(driver, pageObjects.next);
-    Thread.sleep(1000);
+    utils.waitByTime(1000);
     try {
       WebElement error = driver.findElement(By.xpath("//div[contains(@class,'o-form-error-container')]"));
       if (error.isDisplayed()) {
-        Thread.sleep(2000);
+        utils.waitByTime(2000);
         utils.clickElementbyWebElement(driver, pageObjects.next);
       }
     } catch (Exception e) {
       System.out.println("no error displayed at login screen");
     }
     try {
-      Thread.sleep(2000);
+      utils.waitByTime(2000);
       WebElement password_conformation = driver.findElement(By.xpath("//div[@data-se='okta_password']"));
       if (password_conformation.isDisplayed()) {
-        Thread.sleep(2000);
+        utils.waitByTime(2000);
         utils.clickElementbyWebElement(driver, password_conformation);
       }
 
