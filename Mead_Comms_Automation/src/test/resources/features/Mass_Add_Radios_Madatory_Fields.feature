@@ -21,5 +21,4 @@ Feature: MEAD RADIO COMMUNICATIONS,Mass Add Radios with Madatory Fields Function
       | Radio Type                    | Nos | racfid | vehicleno |
       | Base Radio                    |   5 |        |           |
       | DP Repeater                   |   5 |        |           |
-      | End of Train                  |   5 |        |           |
       | Mobile Radio                  |   5 |        | VM1234    |

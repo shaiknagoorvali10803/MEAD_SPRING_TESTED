@@ -76,8 +76,8 @@ public class Mass_Add_Radios_PageActions {
       }
 
   public void clickon_Mass_Add_radios_selection() throws InterruptedException {
-    clickElementByWebElement(driver, pageObjects.action_btn);
-    clickElementByWebElement(driver, pageObjects.Mass_add_btn);
+    utils.clickElementByWebElement(driver, pageObjects.action_btn);
+    utils.clickElementByWebElement(driver, pageObjects.Mass_add_btn);
   }
 
   public String check_page_title() {
@@ -106,7 +106,7 @@ public class Mass_Add_Radios_PageActions {
       verify_RACFpopup(racfid);
     } else if (select_RadioType.equals("Mobile Radio")) {
       clickon_vehicle_radiobtn();
-      inputbyJsExecutor(driver, pageObjects.vechicle_input_txt_box, vehicleno);
+      utils.inputbyJsExecutor(driver, pageObjects.vechicle_input_txt_box, vehicleno);
     }
     String status = select_status();
     select_nxnid_no();
@@ -131,7 +131,7 @@ public class Mass_Add_Radios_PageActions {
 
   public void save_functionality() throws InterruptedException {
     Thread.sleep(1500);
-    clickElementByWebElement(driver, pageObjects.save_btn);
+    utils.clickElementByWebElement(driver, pageObjects.save_btn);
   }
 
   public String inlineEdit_page_Validation() throws InterruptedException {
@@ -156,7 +156,7 @@ public class Mass_Add_Radios_PageActions {
     List<String> drp_dwn_values = new ArrayList<>();
     String attribute = null;
     attribute = driver.findElement(By.xpath("//div[@id='radioForm:tabview:massAddInvStatus']//div")).getAttribute("id");
-    clickElementByWebElement(driver, pageObjects.invstatus_drp_dwn1);
+    utils.clickElementByWebElement(driver, pageObjects.invstatus_drp_dwn1);
     for (WebElement webElement : driver
         .findElements(By.xpath("//li[contains(@id,'" + attribute + "') and not (@data-label='&nbsp;')]"))) {
       drp_dwn_values.add(webElement.getText());
@@ -183,7 +183,7 @@ public class Mass_Add_Radios_PageActions {
       verify_RACFpopup(racfid);
     } else if (select_RadioType.equals("Mobile Radio")) {
       clickon_vehicle_radiobtn();
-      inputbyJsExecutor(driver, pageObjects.vechicle_input_txt_box, vehicleno);
+      utils.inputbyJsExecutor(driver, pageObjects.vechicle_input_txt_box, vehicleno);
     }
     String status = select_status();
     select_nxnid_no();
@@ -202,7 +202,7 @@ public class Mass_Add_Radios_PageActions {
   }
 
   public void pressCancelBtn() {
-    clickElementByWebElement(driver, pageObjects.cancel_btn);
+    utils.clickElementByWebElement(driver, pageObjects.cancel_btn);
   }
 
   public String navigate_RadioSearch() {
@@ -230,7 +230,7 @@ public class Mass_Add_Radios_PageActions {
   }
 
   public void clickon_RACFfield() {
-    clickElementByWebElement(driver, pageObjects.RACF_field);
+    utils.clickElementByWebElement(driver, pageObjects.RACF_field);
   }
 
   public String verify_RACFpopup(String racfid) throws InterruptedException {
@@ -239,18 +239,18 @@ public class Mass_Add_Radios_PageActions {
     utils.setValueToElement(driver, pageObjects.RACF_window_search, racfid);
     try {
       wait.until(ExpectedConditions.visibilityOf(pageObjects.RACF_search_autocomplete));
-      clickElementByWebElement(driver, pageObjects.RACF_search_autocomplete);
+      utils.clickElementByWebElement(driver, pageObjects.RACF_search_autocomplete);
     } catch (TimeoutException e) {
       driver.navigate().refresh();
       enter_no_radios(radio_nos);
       Select_RadioType(radio_type);
       clickon_RACFfield();
       utils.setValueToElement(driver, pageObjects.RACF_window_search, racfid);
-      clickElementByWebElement(driver, pageObjects.RACF_search_autocomplete);
+      utils.clickElementByWebElement(driver, pageObjects.RACF_search_autocomplete);
     }
 
     Thread.sleep(1000);
-    clickElementByWebElement(driver, pageObjects.RACF_window_search_okbtn);
+    utils.clickElementByWebElement(driver, pageObjects.RACF_window_search_okbtn);
     return act_title;
   }
 
@@ -276,7 +276,7 @@ public class Mass_Add_Radios_PageActions {
 
 
   public void clickon_vehicle_radiobtn() {
-    clickElementByWebElement(driver, pageObjects.vechicle_field_radio_btn);
+    utils.clickElementByWebElement(driver, pageObjects.vechicle_field_radio_btn);
   }
 
   public boolean verify_vehicle_txtbox(String vehicleno) {
@@ -284,7 +284,7 @@ public class Mass_Add_Radios_PageActions {
     try {
       displayed = pageObjects.vechicle_input_txt_box.isDisplayed();
       System.out.println("Vehicle input textbox is displayed on UI");
-      inputbyJsExecutor(driver, pageObjects.vechicle_input_txt_box, vehicleno);
+      utils.inputbyJsExecutor(driver, pageObjects.vechicle_input_txt_box, vehicleno);
     } catch (Exception e) {
       System.out.println("Vehicle inpt textbox is not displayed on UI");
     }
@@ -359,9 +359,9 @@ public class Mass_Add_Radios_PageActions {
 
     if (MissingField.equals("Status")) {
       String attribute = pageObjects.status_drp_dwn.getAttribute("id");
-      clickElementByWebElement(driver, pageObjects.status_drp_dwn);
+      utils.clickElementByWebElement(driver, pageObjects.status_drp_dwn);
       final String status_type = "//li[contains(@id,'" + attribute + "') and @data-label='Select One']";
-      clickElementByXPath(driver, status_type);
+      utils.clickElementByXPath(driver, status_type);
       utils.changefocus();;
     } else {
       select_status();
@@ -394,7 +394,7 @@ public class Mass_Add_Radios_PageActions {
   }
 
   public String check_error_msg() throws InterruptedException {
-    clickElementByWebElement(driver, pageObjects.save_btn);
+    utils.clickElementByWebElement(driver, pageObjects.save_btn);
     Thread.sleep(2000);
     boolean no_radio_sel = pageObjects.no_radio_txt.getAttribute("value").equals("");
     boolean no_status_sel = pageObjects.status_label.getText().equals("Select One");
@@ -537,7 +537,7 @@ public class Mass_Add_Radios_PageActions {
 
   public void enter_no_radios(String numberofradios) {
     /* noofRadio */
-    inputbyJsExecutor(driver, pageObjects.no_radio_txt, numberofradios);
+    utils.inputbyJsExecutor(driver, pageObjects.no_radio_txt, numberofradios);
 
   }
 
@@ -546,15 +546,15 @@ public class Mass_Add_Radios_PageActions {
     String sel_attribute = null;
 
     try {
-      clickElementByWebElement(driver, pageObjects.radio_type_drp_dwn);
+      utils.clickElementByWebElement(driver, pageObjects.radio_type_drp_dwn);
       final String Radio_type = "//li[@data-label='" + radiotype + "']";
-      clickElementByXPath(driver, Radio_type);
+      utils.clickElementByXPath(driver, Radio_type);
       sel_attribute = radiotype;
     } catch (Exception e) {
       utils.changefocus();
-      clickElementByWebElement(driver, pageObjects.radio_type_drp_dwn);
+      utils.clickElementByWebElement(driver, pageObjects.radio_type_drp_dwn);
       final String Radio_type = "//li[@data-label='" + radiotype + "']";
-      clickElementByXPath(driver, Radio_type);
+      utils.clickElementByXPath(driver, Radio_type);
       sel_attribute = radiotype;
     }
     utils.changefocus();;
@@ -565,14 +565,14 @@ public class Mass_Add_Radios_PageActions {
   public String select_status() {
     /* Status */
     String sel_attribute = null;
-    clickElementByWebElement(driver, pageObjects.status_drp_dwn);
+    utils.clickElementByWebElement(driver, pageObjects.status_drp_dwn);
     String attribute = driver
         .findElement(By.xpath("//label[contains(text(),'Status:')]//parent::td//following-sibling::td//div")).getAttribute("id");
     List<WebElement> statusList =
         driver.findElements(By.xpath("//ul[contains(@id,'" + attribute + "')]//li[not(contains(@data-label,'Select One'))]"));
     sel_attribute = SelectRandom(statusList);
     final String inventory_status = "//ul[contains(@id,'" + attribute + "')]//li[@data-label='" + sel_attribute + "']";
-    clickElementByXPath(driver, inventory_status);
+    utils.clickElementByXPath(driver, inventory_status);
     utils.changefocus();;
     return sel_attribute;
   }
@@ -580,11 +580,11 @@ public class Mass_Add_Radios_PageActions {
   public String select_status(String status) {
     /* Status */
     String ele_attribute = null;
-    clickElementByWebElement(driver, pageObjects.status_drp_dwn);
+    utils.clickElementByWebElement(driver, pageObjects.status_drp_dwn);
     String attribute = driver
         .findElement(By.xpath("//label[contains(text(),'Status:')]//parent::td//following-sibling::td//div")).getAttribute("id");
     final String inventory_status = "//ul[contains(@id,'" + attribute + "')]//li[@data-label='" + status + "']";
-    clickElementByXPath(driver, inventory_status);
+    utils.clickElementByXPath(driver, inventory_status);
     utils.changefocus();;
     return ele_attribute;
   }
@@ -592,14 +592,14 @@ public class Mass_Add_Radios_PageActions {
   public void select_nxnid_no() {
 
     /* NXN-ID/Yes */
-    clickElementByWebElement(driver, pageObjects.nxn_id);
+    utils.clickElementByWebElement(driver, pageObjects.nxn_id);
     utils.changefocus();;
 
   }
 
   public void enter_PONUmber(String ponumber, String dateAndTimeString) {
     /* PO Number */
-    inputbyJsExecutor(driver, pageObjects.PO_number, ponumber + dateAndTimeString);
+    utils.inputbyJsExecutor(driver, pageObjects.PO_number, ponumber + dateAndTimeString);
     utils.changefocus();;
   }
 
@@ -608,7 +608,7 @@ public class Mass_Add_Radios_PageActions {
     String ele_attribute = null;
     List<String> dropDownVal = new ArrayList();
     try {
-      clickElementByWebElement(driver, pageObjects.invstatus_drp_dwn);
+      utils.clickElementByWebElement(driver, pageObjects.invstatus_drp_dwn);
       String attribute =
           driver.findElement(By.xpath("//div[@id='radioForm:tabview:massAddInvStatus']//div")).getAttribute("id");
       List<WebElement> inventoryList =
@@ -623,11 +623,11 @@ public class Mass_Add_Radios_PageActions {
       }
       ele_attribute = dropDownVal.get(randomElementIndex);
       final String inventory_status = "//li[@data-label='" + ele_attribute + "']";
-      clickElementByXPath(driver, inventory_status);
+      utils.clickElementByXPath(driver, inventory_status);
 
     } catch (Exception e) {
       utils.changefocus();;
-      clickElementByWebElement(driver, pageObjects.invstatus_drp_dwn);
+      utils.clickElementByWebElement(driver, pageObjects.invstatus_drp_dwn);
       String attribute =
           driver.findElement(By.xpath("//div[@id='radioForm:tabview:massAddInvStatus']//div")).getAttribute("id");
       List<WebElement> inventoryList =
@@ -642,7 +642,7 @@ public class Mass_Add_Radios_PageActions {
       }
       ele_attribute = dropDownVal.get(randomElementIndex);
       final String inventory_status = "//li[@data-label='" + ele_attribute + "']";
-      clickElementByXPath(driver, inventory_status);
+      utils.clickElementByXPath(driver, inventory_status);
     }
     utils.changefocus();;
     return ele_attribute;
@@ -651,26 +651,26 @@ public class Mass_Add_Radios_PageActions {
 
   public void enter_ship_trakno(String shiptrachno, String dateAndTimeString) {
     /* Shipment Tracking Number */
-    inputbyJsExecutor(driver, pageObjects.ship_track_number, shiptrachno + dateAndTimeString);
+    utils.inputbyJsExecutor(driver, pageObjects.ship_track_number, shiptrachno + dateAndTimeString);
     utils.changefocus();;
   }
 
   public void enter_maxprjId(String maxprojectid, String dateAndTimeString) {
     /* MAX Project ID */
-    inputbyJsExecutor(driver, pageObjects.Max_prj_id, maxprojectid + dateAndTimeString);
+    utils.inputbyJsExecutor(driver, pageObjects.Max_prj_id, maxprojectid + dateAndTimeString);
     utils.changefocus();;
   }
 
   public String select_manufacture() {
     /* Manufacturer */
     String sel_attribute = null;
-    clickElementByWebElement(driver, pageObjects.manuf_drp_dwn);
+    utils.clickElementByWebElement(driver, pageObjects.manuf_drp_dwn);
     try {
       List<WebElement> manufactureList = driver
           .findElements(By.xpath("//ul[contains(@id,'radioForm:tabview:manufacData_items')]//li[not(contains(@data-label,'Select One'))]"));
       sel_attribute = SelectRandom(manufactureList);
       final String manuf_name = "//ul[contains(@id,'radioForm:tabview:manufacData_items')]//li[@data-label='" + sel_attribute + "']";
-      clickElementByXPath(driver, manuf_name);
+      utils.clickElementByXPath(driver, manuf_name);
 
     } catch (Exception e) {
       utils.changefocus();;
@@ -678,7 +678,7 @@ public class Mass_Add_Radios_PageActions {
           .findElements(By.xpath("//ul[contains(@id,'radioForm:tabview:manufacData_items')]//li[not(contains(@data-label,'Select One'))]"));
       sel_attribute = SelectRandom(manufactureList);
       final String manuf_name = "//ul[contains(@id,'radioForm:tabview:manufacData_items')]//li[@data-label='" + sel_attribute + "']";
-      clickElementByXPath(driver, manuf_name);
+      utils.clickElementByXPath(driver, manuf_name);
 
     }
     utils.changefocus();;
@@ -698,20 +698,20 @@ public class Mass_Add_Radios_PageActions {
     /* model */
     String sel_attribute = null;
     try {
-      clickElementByWebElement(driver, pageObjects.model_drp_dwn);
+      utils.clickElementByWebElement(driver, pageObjects.model_drp_dwn);
       List<WebElement> modelList = driver
           .findElements(By.xpath("//ul[contains(@id,'radioForm:tabview:modelData_items')]//li[not(contains(@data-label,'Select One'))]"));
       sel_attribute = SelectRandom(modelList);
       final String model_name = "//ul[contains(@id,'radioForm:tabview:modelData_items')]//li[@data-label='" + sel_attribute + "']";
-      clickElementByXPath(driver, model_name);
+      utils.clickElementByXPath(driver, model_name);
     } catch (Exception e) {
       utils.changefocus();;
-      clickElementByWebElement(driver, pageObjects.model_drp_dwn);
+      utils.clickElementByWebElement(driver, pageObjects.model_drp_dwn);
       List<WebElement> modelList = driver
           .findElements(By.xpath("//ul[contains(@id,'radioForm:tabview:modelData_items')]//li[not(contains(@data-label,'Select One'))]"));
       sel_attribute = SelectRandom(modelList);
       final String model_name = "//ul[contains(@id,'radioForm:tabview:modelData_items')]//li[@data-label='" + sel_attribute + "']";
-      clickElementByXPath(driver, model_name);
+      utils.clickElementByXPath(driver, model_name);
     }
 
     utils.changefocus();;
@@ -722,19 +722,19 @@ public class Mass_Add_Radios_PageActions {
   public void enter_recDate(String recdate) {
     /* Received Date */
 
-    inputbyJsExecutor(driver, pageObjects.received_date, recdate);
+    utils.inputbyJsExecutor(driver, pageObjects.received_date, recdate);
     utils.changefocus();;
   }
 
   public void enter_firmware(String firmwareversion, String dateAndTimeString) {
     /* firmware Version */
-    inputbyJsExecutor(driver, pageObjects.firmware_ver, firmwareversion + dateAndTimeString);
+    utils.inputbyJsExecutor(driver, pageObjects.firmware_ver, firmwareversion + dateAndTimeString);
     utils.changefocus();;
   }
 
   public void enter_PoDate(String podate) {
     /* PO Date */
-    inputbyJsExecutor(driver, pageObjects.PO_date, podate);
+    utils.inputbyJsExecutor(driver, pageObjects.PO_date, podate);
     utils.changefocus();;
   }
 
@@ -743,25 +743,25 @@ public class Mass_Add_Radios_PageActions {
     /* Assigned Department */
     String sel_attribute = null;
     try {
-      clickElementByWebElement(driver, pageObjects.assigndept_drp_dwn);
+      utils.clickElementByWebElement(driver, pageObjects.assigndept_drp_dwn);
       String attribute = driver
           .findElement(By.xpath("//label[contains(text(),'Assigned Department:')]//parent::td//following-sibling::td//div")).getAttribute("id");
       List<WebElement> departmentList =
           driver.findElements(By.xpath("//ul[contains(@id,'" + attribute + "')]//li[not(contains(@data-label,'Select One'))]"));
       sel_attribute = SelectRandom(departmentList);
       final String assign_dept = "//ul[contains(@id,'" + attribute + "')]//li[@data-label='" + sel_attribute + "']";
-      clickElementByXPath(driver, assign_dept);
+      utils.clickElementByXPath(driver, assign_dept);
 
     } catch (Exception e) {
       utils.changefocus();;
-      clickElementByWebElement(driver, pageObjects.assigndept_drp_dwn);
+      utils.clickElementByWebElement(driver, pageObjects.assigndept_drp_dwn);
       String attribute = driver
           .findElement(By.xpath("//label[contains(text(),'Assigned Department:')]//parent::td//following-sibling::td//div")).getAttribute("id");
       List<WebElement> departmentList =
           driver.findElements(By.xpath("//ul[contains(@id,'" + attribute + "')]//li[not(contains(@data-label,'Select One'))]"));
       sel_attribute = SelectRandom(departmentList);
       final String assign_dept = "//ul[contains(@id,'" + attribute + "')]//li[@data-label='" + sel_attribute + "']";
-      clickElementByXPath(driver, assign_dept);
+      utils.clickElementByXPath(driver, assign_dept);
     }
     utils.changefocus();;
     return sel_attribute;
@@ -770,7 +770,7 @@ public class Mass_Add_Radios_PageActions {
 
   public void enter_shipDate(String shipdate) {
     /* Ship Date */
-    inputbyJsExecutor(driver, pageObjects.ship_date, shipdate);
+    utils.inputbyJsExecutor(driver, pageObjects.ship_date, shipdate);
     utils.changefocus();;
 
   }
@@ -780,40 +780,29 @@ public class Mass_Add_Radios_PageActions {
     String sel_attribute = null;
 
     try {
-      clickElementByWebElement(driver, pageObjects.radio_shop_drp_dwn);
+      utils.clickElementByWebElement(driver, pageObjects.radio_shop_drp_dwn);
       List<WebElement> radioshopList = driver
           .findElements(By.xpath("//ul[contains(@id,'radioForm:tabview:radioShopC_items')]//li[not(contains(@data-label,'Select One'))]"));
       sel_attribute = SelectRandom(radioshopList);
       final String radioshop_name = "//ul[contains(@id,'radioForm:tabview:radioShopC_items')]//li[@data-label='" + sel_attribute + "']";
-      clickElementByXPath(driver, radioshop_name);
+      utils.clickElementByXPath(driver, radioshop_name);
 
     } catch (Exception e) {
       utils.changefocus();;
-      clickElementByWebElement(driver, pageObjects.radio_shop_drp_dwn);
+      utils.clickElementByWebElement(driver, pageObjects.radio_shop_drp_dwn);
       List<WebElement> radioshopList = driver
           .findElements(By.xpath("//ul[contains(@id,'radioForm:tabview:radioShopC_items')]//li[not(contains(@data-label,'Select One'))]"));
       sel_attribute = SelectRandom(radioshopList);
       final String radioshop_name = "//ul[contains(@id,'radioForm:tabview:radioShopC_items')]//li[@data-label='" + sel_attribute + "']";
-      clickElementByXPath(driver, radioshop_name);
+      utils.clickElementByXPath(driver, radioshop_name);
     }
     utils.changefocus();;
     return sel_attribute;
   }
-
-
-
-  /* Utility Methods */
-  /**
-   * -----Change the focus from drop down and other fields--------------------------------------
-   */
-  public void changefocus(WebDriver driver) {
-    Actions actions = new Actions(driver);
-    actions.moveByOffset(20, 8).click().build().perform();
-  }
-
   /**
    * -----Fetch values from results table based on col name without duplicates----------------------
    */
+
 
   public Set<String> table_column_values(WebDriver driver, List<WebElement> element, String colName)
 
@@ -837,45 +826,6 @@ public class Mass_Add_Radios_PageActions {
   }
 
   /**
-   * -----JS Method for scroll to element and enter the value ---------
-   */
-
-  public void inputbyJsExecutor(WebDriver driver, WebElement element, Object value) {
-    final WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(DRIVER_WAIT_TIME_IN_SECS));
-    wait.until(ExpectedConditions.visibilityOf(element));
-    executor.executeScript("arguments[0].scrollIntoView(true);", element);
-    try {
-      Thread.sleep(thread_sleep);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
-    if (wait.until(ExpectedConditions.elementToBeClickable(element)) != null) {
-      executor.executeScript("arguments[0].value='" + value + "';", element);
-    }
-    try {
-      Thread.sleep(thread_sleep);
-    } catch (InterruptedException e) {
-
-      e.printStackTrace();
-    }
-  }
-
-  /**
-   * -----double click operation ---------
-   */
-  public void doubleclick_element(WebDriver driver, String xpath, String colName) {
-    List<WebElement> findElements = driver.findElements(By.xpath(xpath));
-    for (WebElement webElement : findElements) {
-      if (webElement.getText().equals(colName)) {
-        Actions actions = new Actions(driver);
-        actions.doubleClick(webElement).perform();
-      }
-    }
-
-  }
-
-
-  /**
    * -----to Check element enabled and clickable ---------
    */
 
@@ -890,49 +840,6 @@ public class Mass_Add_Radios_PageActions {
       System.out.println("element is not clickable & disabled");
     }
     return false;
-  }
-
-
-  /**
-   * -----clickElementByWebElement with after delay ---------
-   */
-
-  public void clickElementByWebElement(final WebDriver driver, final WebElement element) {
-    try {
-      final WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(DRIVER_WAIT_TIME_IN_SECS));
-      wait.until(ExpectedConditions.visibilityOf(element));
-      if (wait.until(ExpectedConditions.elementToBeClickable(element)) != null) {
-        element.click();
-      }
-      try {
-        Thread.sleep(thread_sleep);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
-    } catch (TimeoutException | NoSuchElementException ele) {
-      fail();
-    }
-  }
-
-  /**
-   * -----clickElementByXpath with after delay ---------
-   */
-
-  public void clickElementByXPath(final WebDriver driver, final String xPath) {
-    try {
-      final WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(DRIVER_WAIT_TIME_IN_SECS));
-      wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xPath)));
-      if (wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xPath))) != null) {
-        driver.findElement(By.xpath(xPath)).click();
-      }
-      try {
-        Thread.sleep(thread_sleep);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
-    } catch (TimeoutException | NoSuchElementException ele) {
-      throw ele;
-    }
   }
 
 }

@@ -1807,6 +1807,18 @@ public class SeleniumUtils {
     Actions actions = new Actions(driver);
     actions.moveByOffset(20, 8).click().build().perform();
   }
+
+  public void waiTillLoading (WebElement element){
+    waitByTime(500);
+    try{
+    if(element.isDisplayed())
+    webDriverFluentWait(defaultMaxTime).until(ExpectedConditions.invisibilityOf(element));
+    } catch(Exception e)
+    {
+      LOGGER.info("Failed in Waiting for loader");
+    }
+  }
+
   public boolean waitUntilTextPresentInElement(WebElement element, String elementText, int seconds) {
     WebDriverWait expWait = new WebDriverWait(driver, Duration.ofSeconds(seconds));
     return expWait.until(ExpectedConditions.textToBePresentInElement(element, elementText));

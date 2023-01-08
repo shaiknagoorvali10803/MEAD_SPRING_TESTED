@@ -21,10 +21,3 @@ Feature: MEAD RADIO COMMUNICATIONS,Mass Add Radios with Missing Madatory Fields 
       | RadioType       |
       | NoOfRadios      |
       | Status          |
-      | NXNID           |
-      | InvenToryStatus |
-      | PONumber        |
-      | Manufacturer    |
-      | Model           |
-      | ReceivedDate    |
-      | PODate          |

@@ -9,7 +9,6 @@ import io.cucumber.junit.CucumberOptions;
 @CucumberOptions(features = "classpath:features", glue = "com.spring.springselenium.StepDefinitions", tags = "@DataExist",
     plugin = {"pretty", "json:target/cucumber-reports/CucumberTestReport.json",
         "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:", "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm",
-        "html:target/cucumber-reports/cucumber-pretty.html"},dryRun = true
-)
+        "html:target/cucumber-reports/cucumber-pretty.html"},dryRun = false)
 public class CommsCucumberTest {
 }
